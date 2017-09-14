@@ -1,0 +1,36 @@
+<div class="container">
+  {{#each article}}
+    <br><br>
+    <div class="card" style="width: 20rem;">
+      {{#if this.image}}
+      <img class="card-img-top" src={{this.image}} alt="Card image cap">
+      {{/if}}
+      <div class="card-block">
+        <h4 class="card-title">{{this.title}}</h4>
+        <hr>
+        {{#if this.summary}}
+        <p class="card-text">{{this.summary}}</p>
+        {{/if}}
+        {{#if this.byline}}
+        <p class="card-text">{{this.byline}}</p>
+        {{/if}}
+        <a href={{this.link}} data-articleId={{this.id}} class="btn btn-primary" target="_blank">Full Article</a>
+      </div>
+    </div>
+
+
+<!--
+    <div class="card">
+      <div class="card-block">
+        <h4 class="card-title">{{this.title}}</h4>
+        {{#if this.summary}}
+        <p class="card-text">{{this.summary}}</p>
+        {{/if}}
+        {{#if this.byline}}
+        <p class="card-text">{{this.byline}}</p>
+        {{/if}}
+        <a href={{this.link}} class="btn btn-primary">Article Link</a>
+      </div>
+    </div> -->
+  {{/each}}
+</div>
