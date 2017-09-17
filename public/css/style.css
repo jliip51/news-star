@@ -1,0 +1,12 @@
+body {
+  background-image: url();
+}
+
+.card-row {
+  margin-top: 24px;
+}
+
+.card {
+  background-color: rgb(247, 247, 247);
+  box-shadow: 5px 5px 2px rgb(214, 214, 214);
+}

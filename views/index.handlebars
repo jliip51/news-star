@@ -1,36 +1,76 @@
-<div class="container">
-  {{#each article}}
-    <br><br>
-    <div class="card" style="width: 20rem;">
-      {{#if this.image}}
-      <img class="card-img-top" src={{this.image}} alt="Card image cap">
-      {{/if}}
-      <div class="card-block">
-        <h4 class="card-title">{{this.title}}</h4>
-        <hr>
-        {{#if this.summary}}
-        <p class="card-text">{{this.summary}}</p>
-        {{/if}}
-        {{#if this.byline}}
-        <p class="card-text">{{this.byline}}</p>
-        {{/if}}
-        <a href={{this.link}} data-articleId={{this.id}} class="btn btn-primary" target="_blank">Full Article</a>
+<!-- sumbmit comment modal -->
+<div class="modal fade" id="addComment" tabindex="-1" aria-labelledby="addCommentModalLabel" aria-hidden="true">">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="commentInput">
+          <div class="form-group">
+            <label for="commentUsernameInput">Username</label>
+            <input type="text" class="form-control" id="commentUsername" placeholder="username">
+          </div>
+          <div class="form-group">
+            <label for="commentTextArea">Your Comment</label>
+            <textarea class="form-control" id="commentText" rows="4" placeholder="Add comment here"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" id="commentSubmit" class="btn btn-success">Submit Comment</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
     </div>
+  </div>
+</div>
 
-
-<!--
-    <div class="card">
-      <div class="card-block">
-        <h4 class="card-title">{{this.title}}</h4>
-        {{#if this.summary}}
-        <p class="card-text">{{this.summary}}</p>
-        {{/if}}
-        {{#if this.byline}}
-        <p class="card-text">{{this.byline}}</p>
-        {{/if}}
-        <a href={{this.link}} class="btn btn-primary">Article Link</a>
+<div class="modal fade" id="viewComments" tabindex="-1" role="dialog" aria-labelledby="viewCommentsModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="CommentTitle">Comments</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
-    </div> -->
-  {{/each}}
+      <div class="modal-body" id="commentsBody">
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- article cards section -->
+<div class="container">
+  <div class="row justify-content-center card-row">
+    <div class="card-columns">
+      {{#each article}}
+        <div class="card" style="width: 24rem;">
+          {{#if this.image}}
+            <img class="card-img-top" src= {{this.image}} alt="Card image cap">
+          {{/if}}
+          <div class="card-block">
+            <h5 class="card-title">{{this.title}}</h5>
+            <hr>
+            {{#if this.summary}}
+              <p class="card-text">{{this.summary}}</p>
+            {{/if}}
+            {{#if this.byline}}
+              <p class="card-text">{{this.byline}}</p>
+            {{/if}}
+            <a href= {{this.link}} data-articleId= {{this.id}} class="btn btn-outline-info btn-sm" target="_blank">Full Article</a>
+            <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#addComment" data-article="{{this._id}}">Comment</button>
+            <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#viewComments" data-article="{{this._id}}">See Comments</button>
+          </div>
+        </div>
+      {{/each}}
+    </div>
+  </div>
 </div>

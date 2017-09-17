@@ -25,7 +25,14 @@ const ArticleSchema = new Schema({
     required: true,
     unique: true
   },
-  comment: {
+  rank: {
+    type: Number,
+    required: true
+  },
+  active: {
+    type: Boolean,
+  },
+  comments: {
     type: Schema.Types.ObjectId,
     ref: "Comment"
   }
