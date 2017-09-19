@@ -2,34 +2,28 @@ $(document).ready(() => {
 
   const getUpdatedArticleInfo = response => {
     console.log(response);
-    $.ajax({
-      type: "GET",
-      url: "/"
-    }).done(res => {
-      console.log(res);
+    $.ajax({type: "GET", url: "/"}).done(res => {
     });
   };
 
   $.get('/scrape', getUpdatedArticleInfo);
 
   //binds article id to comment form submit button in modal//
-  $('#addComment').on('show.bs.modal', function (event) {
-    let button = $(event.relatedTarget);
-    let id = button.data('article')
-    let modal = $(this)
-    modal.find('#commentSubmit').attr('data-article', id);
+  $(document).on('click', '#addCommentModal', function() {
+    let id = $(this).data('article');
+    $('#articleIdField').data('article', id);
+    $('#addComment').modal('show');
   });
 
-
+  //Sends AJAX post to server to add comment//
   $('#commentSubmit').on('click', function(event) {
     event.preventDefault();
-    let id = $(this).data('article');
-
+    let id= $('#articleIdField').data('article');
     let inputs = {
       username: $('#commentUsername').val().trim(),
-      body:  $('#commentText').val().trim()
+      body: $('#commentText').val().trim()
     }
-    console.log(inputs);
+
     $.ajax({
       type: "POST",
       dataType: "json",
@@ -38,46 +32,62 @@ $(document).ready(() => {
     }).done(data => {
       $("#commentUsername").val("");
       $("#commentText").val("");
-    });
+      $("#addComment").modal('hide');
+    }).fail(error => {
+      console.log(error);
+    })
   });
 
-  //binds article id to comment modal//
-  $('#viewComments').on('show.bs.modal', function (event) {
-    let button = $(event.relatedTarget);
-    let id = button.data('article')
+  const renderComments = id => {
     console.log(id);
     $.ajax({
       type: "GET",
       url: "/article/" + id
     }).done(res => {
-      console.log("response from server")
       console.log(res);
-      // let commentDiv = $("<div>");
-      // commentDiv.addClass("row")
-      // commentDiv.append("<p>" + res.comments.body + "</p>");
-      // commentDiv.append("<br><p>" +res.comments.username + "</p>");
-      // commentDiv.append("<button class='btn btn-outline-danger btn-sm commentDelete' data-commentId=" + res.comments._id + "</button>")
-      // commentDiv.append("<hr>");
-      //
-      // let modal = $("#viewComments");
-      // modal.find('#commentBody').empty();
-      // modal.find('#commentBody').html(commentDiv);
+      let commentsArray = res[0].comments;
+
+      $('#viewComments').find('#commentsBody').empty();
+
+      commentsArray.forEach(comment => {
+
+        let commentDiv = $("<div>");
+        commentDiv.addClass("commentRow");
+        commentDiv.append("<p class='commentTitle'>" + comment.body + "</p>");
+        commentDiv.append("<button class='btn btn-outline-primary btn-sm commentDelete' data-articleId='" + res[0]._id + "' data-commentId='" + comment._id + "'>Delete</button>");
+        commentDiv.append("<p class='commentBy'>Posted By: " + comment.username + "</p>");
+        commentDiv.append('<hr>')
+
+        $('#viewComments').find('#commentsBody').append(commentDiv);
+      });
+    }).fail(error => {
+      console.log(error);
     });
+  };
+
+  //binds article id to comment modal//
+  $(document).on('click', '#viewCommentModal', function() {
+    let id = $(this).data('article');
+    $("#viewComments").modal('show');
+    renderComments(id);
   });
 
+  $(document).on('click', '.commentDelete', function() {
 
+    let commentId = $(this).data('commentid');
+    let articleId = $(this).data('articleid');
 
-
-
-
-
-
-
-
-
-
-
-
-
+    $.ajax({
+      type: "PUT",
+      url: "/comment/remove",
+      data: {
+        commentId: commentId,
+        articleId: articleId
+      }
+    }).done(res => {
+      console.log(res);
+      renderComments(articleId);
+    });
+  });
 
 });

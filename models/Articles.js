@@ -31,11 +31,16 @@ const ArticleSchema = new Schema({
   },
   active: {
     type: Boolean,
+    required: true
   },
-  comments: {
+  date: {
+    type: Date,
+    default: Date.now
+  },
+  comments: [{
     type: Schema.Types.ObjectId,
     ref: "Comment"
-  }
+  }]
 }, {
   timestamps: true
 });

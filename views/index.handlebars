@@ -1,9 +1,40 @@
+<div class="container">
+  <nav class="navbar fixed-top navbar-light bg-primary">
+  <div class="container">
+     <div class ="navbar-header">
+    <a class="navbar-brand" href="/">NEWS<span><img src="images/star.png"></span>STAR</a>
+  </div>
+    <ul class="nav navbar-nav d-inline">
+        <a class="btn btn-outline-info btn-md" href="https://www.nytimes.com" target="_blank" role="button">Source: NYT.com</a>
+        <a class="btn btn-outline-info btn-md" href="/api/all" target="_blank" role="button">API</a>
+        <a class="btn btn-outline-info btn-md" href="#" role="button">Archived Articles</a>
+    </ul>
+  </div>
+</div>
+
+<div class="masthead">
+  <div id="stage">
+    <div id="shape" class="backfaces">
+      <div class="plane one">N</div>
+      <div class="plane two">E</div>
+      <div class="plane three">W</div>
+      <div class="plane four">S</div>
+      <div class="plane five">-</div>
+      <div class="plane six">S</div>
+      <div class="plane seven">T</div>
+      <div class="plane eight">A</div>
+      <div class="plane nine">R</div>
+      <div class="plane ten"><img class='star' src="http://www.pngmart.com/files/1/3D-Gold-Star-PNG-Picture.png"></div>
+    </div>
+  </div>
+</div>
+
 <!-- sumbmit comment modal -->
 <div class="modal fade" id="addComment" tabindex="-1" aria-labelledby="addCommentModalLabel" aria-hidden="true">">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Modal title</h5>
+        <h5 class="modal-title">Post Comment</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -18,6 +49,7 @@
             <label for="commentTextArea">Your Comment</label>
             <textarea class="form-control" id="commentText" rows="4" placeholder="Add comment here"></textarea>
           </div>
+          <input type="hidden" id="articleIdField" class="form-control">
         </form>
       </div>
       <div class="modal-footer">
@@ -49,6 +81,7 @@
 
 <!-- article cards section -->
 <div class="container">
+  <h2>Latest Articles</h2>
   <div class="row justify-content-center card-row">
     <div class="card-columns">
       {{#each article}}
@@ -65,9 +98,9 @@
             {{#if this.byline}}
               <p class="card-text">{{this.byline}}</p>
             {{/if}}
-            <a href= {{this.link}} data-articleId= {{this.id}} class="btn btn-outline-info btn-sm" target="_blank">Full Article</a>
-            <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#addComment" data-article="{{this._id}}">Comment</button>
-            <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="modal" data-target="#viewComments" data-article="{{this._id}}">See Comments</button>
+            <a href={{this.link}} data-articleId={{this.id}} target="_blank"><button type="button" class="btn btn-outline-info btn-sm">Full Article</button></a>
+            <button type="button" class="btn btn-outline-primary btn-sm" id="addCommentModal" data-article="{{this._id}}">Comment</button>
+            <button type="button" class="btn btn-outline-secondary btn-sm" id="viewCommentModal" data-article="{{this._id}}">See Comments</button>
           </div>
         </div>
       {{/each}}

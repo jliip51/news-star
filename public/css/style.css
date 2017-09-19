@@ -1,5 +1,105 @@
 body {
-  background-image: url();
+  background-image: url(../images/natural_paper.png);
+}
+
+.navbar-header{
+  float:left
+}
+
+.navbar-nav {
+  float:right
+}
+
+.masthead {
+  width: 100%;
+  height: 400px;
+  -webkit-perspective: 800;
+  -webkit-perspective-origin: 50% 225px;
+}
+#stage {
+  width: 100%;
+  height: 100%;
+  -webkit-transition: -webkit-transform 2s;
+  -webkit-transform-style: preserve-3d;
+}
+
+#shape {
+  position: relative;
+  top: 100px;
+  margin: 0 auto;
+  height: 150px;
+  width: 150px;
+  -webkit-transform-style: preserve-3d;
+}
+
+.plane {
+  position: absolute;
+  height: 90px;
+  width: 90px;
+  text-align: center;
+  font-family: Times, serif;
+  font-size: 140px;
+  color: black;
+  text-shadow: 5px 5px 2px #727272;
+}
+
+.star {
+  margin-top: -10px;
+  height: 160px;
+  width: 160px;
+}
+
+#shape.backfaces .plane {
+  -webkit-backface-visibility: visible;
+}
+
+#shape {
+  -webkit-animation: spin 10s infinite linear;
+}
+
+@-webkit-keyframes spin {
+  from { -webkit-transform: rotateY(0); }
+  to   { -webkit-transform: rotateY(-360deg); }
+}
+
+.one {
+  -webkit-transform: translateZ(320px);
+}
+
+.two {
+  -webkit-transform: rotateY(35deg) translateZ(320px);
+}
+
+.three {
+  -webkit-transform: rotateY(70deg) translateZ(320px);
+}
+
+.four {
+  -webkit-transform: rotateY(105deg) translateZ(320px);
+}
+
+.five {
+  -webkit-transform: rotateY(140deg) translateZ(320px);
+}
+
+.six {
+  -webkit-transform: rotateY(175deg) translateZ(320px);
+}
+
+.seven {
+  -webkit-transform: rotateY(210deg) translateZ(320px);
+}
+
+.eight {
+  -webkit-transform: rotateY(245deg) translateZ(320px);
+}
+
+.nine {
+  -webkit-transform: rotateY(280deg) translateZ(320px);
+}
+
+.ten {
+  -webkit-transform: rotateY(deg) translateZ(320px);
 }
 
 .card-row {
@@ -9,4 +109,27 @@ body {
 .card {
   background-color: rgb(247, 247, 247);
   box-shadow: 5px 5px 2px rgb(214, 214, 214);
+}
+
+div.commentRow {
+  margin-bottom: 10px;
+}
+
+p.commentTitle {
+  float: left;
+  width: 85%;
+  margin: 0;
+  font-family: Times;
+  font-size: 14px;
+  color: red;
+}
+
+p.commentBy {
+ width: 85%;
+ margin: 0;
+ font-size: 12px;
+}
+
+.commentDelete {
+  float: right;
 }
