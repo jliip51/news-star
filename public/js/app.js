@@ -10,7 +10,7 @@ $(document).ready(() => {
 
   //binds article id to comment form submit button in modal//
   $(document).on('click', '#addCommentModal', function() {
-    let id = $(this).data('article');
+    const id = $(this).data('article');
     $('#articleIdField').data('article', id);
     $('#addComment').modal('show');
   });
@@ -18,10 +18,16 @@ $(document).ready(() => {
   //Sends AJAX post to server to add comment//
   $('#commentSubmit').on('click', function(event) {
     event.preventDefault();
-    let id= $('#articleIdField').data('article');
-    let inputs = {
-      username: $('#commentUsername').val().trim(),
-      body: $('#commentText').val().trim()
+    const id= $('#articleIdField').data('article');
+    const username = $('#commentUsername').val().trim();
+    const body = $('#commentText').val().trim();
+
+    if (username === "" || body === "") {
+      $('#alert').append('<p>All fields must be fill out to complete comment submission');
+    } else {
+    const inputs = {
+      username: username,
+      body: body
     }
 
     $.ajax({
@@ -32,10 +38,12 @@ $(document).ready(() => {
     }).done(data => {
       $("#commentUsername").val("");
       $("#commentText").val("");
+      $("#alert").empty();
       $("#addComment").modal('hide');
     }).fail(error => {
       console.log(error);
-    })
+    });
+  }
   });
 
   const renderComments = id => {
@@ -45,7 +53,7 @@ $(document).ready(() => {
       url: "/article/" + id
     }).done(res => {
       console.log(res);
-      let commentsArray = res[0].comments;
+      const commentsArray = res[0].comments;
 
       $('#viewComments').find('#commentsBody').empty();
 
@@ -67,15 +75,15 @@ $(document).ready(() => {
 
   //binds article id to comment modal//
   $(document).on('click', '#viewCommentModal', function() {
-    let id = $(this).data('article');
+    const id = $(this).data('article');
     $("#viewComments").modal('show');
     renderComments(id);
   });
 
   $(document).on('click', '.commentDelete', function() {
 
-    let commentId = $(this).data('commentid');
-    let articleId = $(this).data('articleid');
+    const commentId = $(this).data('commentid');
+    const articleId = $(this).data('articleid');
 
     $.ajax({
       type: "PUT",
